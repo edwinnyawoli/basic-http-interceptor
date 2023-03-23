@@ -77,7 +77,9 @@ class InterceptedClient implements Client {
 
   void _notifyInterceptors(Function(Interceptor) callback) {
     for (var i = 0; i < _interceptors.length; i++) {
-      callback.call(_interceptors[i]);
+      try {
+        callback.call(_interceptors[i]);
+      } finally {}
     }
   }
 
