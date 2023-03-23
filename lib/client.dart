@@ -81,9 +81,10 @@ class InterceptedClient implements Client {
     }
   }
 
-  Future<T> _notifyOnError<T>(Future<T> Function() request) {
+  Future<T> _notifyOnError<T>(Future<T> Function() request) async {
     try {
-      return request.call();
+      final response = await request.call();
+      return response;
     } on Exception catch (e) {
       _notifyInterceptors((i) => i.onError(e));
       rethrow;
